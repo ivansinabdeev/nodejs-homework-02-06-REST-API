@@ -1,24 +1,28 @@
 const express = require("express");
 const router = express.Router();
 
-router.get("/", async (req, res, next) => {
-  res.json({ message: "All contacts" });
+// const contacts = require("../../model/contacts.json");
+const contactsOperations = require("../../model/index");
+
+router.get("/", async (req, res) => {
+  const contacts = await contactsOperations.listContacts();
+  res.json(contacts);
 });
 
-router.get("/:contactId", async (req, res, next) => {
-  res.json({ message: "template message" });
+router.get("/:id", async (req, res, next) => {
+  res.json(contacts[0]);
 });
 
 router.post("/", async (req, res, next) => {
-  res.json({ message: "template message" });
+  res.json(contacts);
 });
 
-router.delete("/:contactId", async (req, res, next) => {
-  res.json({ message: "template message" });
+router.delete("/:id", async (req, res, next) => {
+  res.json(contacts);
 });
 
-router.patch("/:contactId", async (req, res, next) => {
-  res.json({ message: "template message" });
+router.post("/:id", async (req, res, next) => {
+  res.json(contacts);
 });
 
-module.exports = { router };
+module.exports = router;
