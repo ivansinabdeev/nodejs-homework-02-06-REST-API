@@ -16,7 +16,6 @@ const joiSchema = Joi.object({
   phone: Joi.string().required(),
 });
 
-// const contacts = require("../../model/contacts.json");
 const contactsOperations = require("../../model/index");
 
 router.get("/", async (req, res, next) => {
@@ -25,11 +24,6 @@ router.get("/", async (req, res, next) => {
     res.json(contacts);
   } catch (error) {
     next(error);
-    // res.status(500).json({
-    //   status: "error",
-    //   code: 500,
-    //   message: "Server error",
-    // });
   }
 });
 
@@ -39,15 +33,6 @@ router.get("/:id", async (req, res, next) => {
     const contact = await contactsOperations.getContactById(id);
     if (!contact) {
       throw new createError(404, "This contact does not exist in contacts");
-      // const error = new Error("This contact does not exist in contacts");
-      // error.status = 404;
-      // throw error;
-      //
-      // res.status(404).json({
-      //   status: "error",
-      //   code: 404,
-      //   message: "This contact does not exist in contacts",
-      // });
     }
     res.json({
       status: "success",
