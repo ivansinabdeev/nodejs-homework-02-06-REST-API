@@ -2,6 +2,20 @@ const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
 
+const mongoose = require("mongoose");
+const DB_HOST =
+  "mongodb+srv://ivan_s:Ivansina1988@cluster0.rgjdc.mongodb.net/db-contacts?retryWrites=true&w=majority";
+
+mongoose
+  .connect(DB_HOST)
+  .then(() => {
+    console.log("Database connection successful");
+  })
+  .catch((error) => {
+    console.log(error.message)
+    process.exit(1)
+  };
+
 const routes = require("./routes/api/indexContacts");
 
 const app = express();
