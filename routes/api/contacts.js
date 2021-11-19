@@ -16,7 +16,9 @@ const joiSchema = Joi.object({
   phone: Joi.string().required(),
 });
 
-const contactsOperations = require("../../model/index");
+const { Contact } = require("../../model");
+
+// const contactsOperations = require("../../model/index");
 
 router.get("/", async (req, res, next) => {
   try {
@@ -52,7 +54,7 @@ router.post("/", async (req, res, next) => {
     if (error) {
       throw new BadRequest(error.message);
     }
-    const contactNew = await contactsOperations.addContact(req.body);
+    const contactNew = await Contact.create(req.body);
     res.status(201).json({
       status: "success",
       code: 200,
