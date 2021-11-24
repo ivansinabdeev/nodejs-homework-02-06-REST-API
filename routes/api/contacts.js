@@ -18,7 +18,7 @@ const joiSchema = Joi.object({
 
 const { Contact } = require("../../model");
 
-// const contactsOperations = require("../../model/index");
+const contactsOperations = require("../../model/index");
 
 router.get("/", async (req, res, next) => {
   try {
