@@ -22,7 +22,7 @@ const contactsOperations = require("../../model/index");
 
 router.get("/", async (req, res, next) => {
   try {
-    const contacts = await contactsOperations.listContacts();
+    const contacts = await Contact.find({});
     res.json(contacts);
   } catch (error) {
     next(error);
@@ -32,7 +32,7 @@ router.get("/", async (req, res, next) => {
 router.get("/:id", async (req, res, next) => {
   try {
     const { id } = req.params;
-    const contact = await contactsOperations.getContactById(id);
+    const contact = await Contact.findById(id);
     if (!contact) {
       throw new createError(404, "This contact does not exist in contacts");
     }
@@ -74,7 +74,9 @@ router.put("/:id", async (req, res, next) => {
       throw new BadRequest(error.message);
     }
     const { id } = req.params;
-    const contact = await contactsOperations.updateContact(id, req.body);
+    const contact = await Contact.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
     if (!contact) {
       throw new createError(404, "This contact does not exist in contacts");
     }
@@ -93,7 +95,7 @@ router.put("/:id", async (req, res, next) => {
 router.delete("/:id", async (req, res, next) => {
   try {
     const { id } = req.params;
-    const contact = await contactsOperations.removeContact(id);
+    const contact = await Contact.findByIdAndRemove(id);
     if (!contact) {
       throw new createError(404, "Not found");
     }
@@ -101,6 +103,37 @@ router.delete("/:id", async (req, res, next) => {
       status: "success",
       code: 200,
       message: "contact deleted",
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.patch("/:id/favorite", async (req, res, next) => {
+  try {
+    const { error } = joiSchema.validate(req.body);
+    const { favorite } = req.body;
+    if (error) {
+      throw new BadRequest(error.message);
+    }
+    const { id } = req.params;
+    const contact = await Contact.findByIdAndUpdate(
+      id,
+      { favorite },
+      req.body,
+      {
+        new: true,
+      }
+    );
+    if (!contact) {
+      throw new createError(404, "Not found");
+    }
+    res.json({
+      status: "success",
+      code: 200,
+      data: {
+        contact,
+      },
     });
   } catch (error) {
     next(error);
