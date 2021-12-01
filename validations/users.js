@@ -10,9 +10,9 @@ const joiUserSchema = Joi.object({
 
   password: Joi.string().required(),
 
-  subscription: Joi.string(),
+  // subscription: Joi.string(),
 
-  token: Joi.string(),
+  // token: Joi.string(),
 
   // owner: Joi.string(),
 });
