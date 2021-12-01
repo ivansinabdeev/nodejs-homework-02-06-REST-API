@@ -14,7 +14,7 @@ const joiUserSchema = Joi.object({
 
   token: Joi.string(),
 
-  owner: Joi.string(),
+  // owner: Joi.string(),
 });
 
 module.exports = joiUserSchema;
