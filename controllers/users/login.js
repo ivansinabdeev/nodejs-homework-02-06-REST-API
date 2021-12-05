@@ -1,8 +1,8 @@
 const { NotFound, Unauthorized } = require("http-errors");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const { User } = require("../../model");
-const jwt = require("jsonwebtoken");
 
 const { SECRET_KEY } = process.env;
 
@@ -22,6 +22,7 @@ const login = async (req, res, next) => {
       id: user._id,
     };
     const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "1h" });
+    await User.findByIdAndUpdate(user._id, { token });
     res.json({
       status: "success",
       code: 200,

@@ -11,6 +11,8 @@ const joiContactSchema = Joi.object({
     .required(),
 
   phone: Joi.string().required(),
+
+  owner: Joi.string(),
 });
 
 module.exports = joiContactSchema;

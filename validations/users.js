@@ -13,8 +13,6 @@ const joiUserSchema = Joi.object({
   subscription: Joi.string(),
 
   token: Joi.string(),
-
-  // owner: Joi.string(),
 });
 
 module.exports = joiUserSchema;
