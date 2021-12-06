@@ -3,10 +3,16 @@ const { createError } = require("http-errors");
 
 const updateById = async (req, res, next) => {
   try {
-    const { id } = req.params;
-    const contact = await Contact.findByIdAndUpdate(id, req.body, {
-      new: true,
-    });
+    // const { id } = req.params;
+    const { contactId } = req.params;
+    const { _id: owner } = req.user;
+    const contact = await Contact.findOneAndUpdate(
+      { _id: contactId, owner },
+      req.body,
+      {
+        new: true,
+      }
+    );
     if (!contact) {
       throw new createError(404, "This contact does not exist in contacts");
     }

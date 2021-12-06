@@ -8,22 +8,17 @@ const { SECRET_KEY } = process.env;
 const authentication = async (req, res, next) => {
   try {
     const [bearer, token] = req.headers.authorization.split(" ");
-    if (bearer !== "Bearer") {
-      throw new Unauthorized();
+    const { id } = jwt.verify(token, SECRET_KEY);
+    let user;
+
+    if (bearer === "Bearer" && token) {
+      user = await User.findById(id);
     }
-    try {
-      const { id } = jwt.verify(token, SECRET_KEY);
-      const user = await User.findById(id, "_id email subscription");
-      if (!user) {
-        throw new Unauthorized("Not authorized");
-      }
-      // if (!user.token) {
-      //   throw new Unauthorized();
-      // }
+    if (user && user.token === token) {
       req.user = user;
       next();
-    } catch (error) {
-      throw new Unauthorized(error.message);
+    } else {
+      throw new Error("Not found");
     }
   } catch (error) {
     next(error);
