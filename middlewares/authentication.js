@@ -1,4 +1,4 @@
-const { Unauthorized } = require("http-errors");
+const { Unauthorized, BadRequest } = require("http-errors");
 const jwt = require("jsonwebtoken");
 
 const { User } = require("../model");
@@ -11,6 +11,10 @@ const authentication = async (req, res, next) => {
     const { id } = jwt.verify(token, SECRET_KEY);
     let user;
 
+    if (!req.headers.authorization) {
+      throw new BadRequest("");
+    }
+
     if (bearer === "Bearer" && token) {
       user = await User.findById(id);
     }
@@ -18,7 +22,7 @@ const authentication = async (req, res, next) => {
       req.user = user;
       next();
     } else {
-      throw new Error("Not found");
+      throw new Unauthorized("Not found");
     }
   } catch (error) {
     next(error);
