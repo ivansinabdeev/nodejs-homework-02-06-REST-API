@@ -3,7 +3,6 @@ const { createError } = require("http-errors");
 
 const removeById = async (req, res, next) => {
   try {
-    // const { id } = req.params;
     const { contactId } = req.params;
     const { _id: owner } = req.user;
     const contact = await Contact.findByIdAndRemove({

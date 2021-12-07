@@ -18,7 +18,7 @@ const authentication = async (req, res, next) => {
       req.user = user;
       next();
     } else {
-      throw new Error("Not found");
+      throw new Unauthorized("Not found");
     }
   } catch (error) {
     next(error);

@@ -3,8 +3,6 @@ const { createError } = require("http-errors");
 
 const getById = async (req, res, next) => {
   try {
-    // const { id } = req.params;
-    // const { _id } = req.user;
     const { contactId } = req.params;
     const { _id: owner } = req.user;
     const contact = await Contact.findOne(
