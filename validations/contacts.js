@@ -13,6 +13,8 @@ const joiContactSchema = Joi.object({
   phone: Joi.string().required(),
 
   owner: Joi.string(),
+
+  avatarURL: Joi.string(),
 });
 
 module.exports = joiContactSchema;
