@@ -6,6 +6,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const routes = require("./routes/api/indexContacts");
+const usersRouter = require("./routes/api/users");
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use(logger(formatsLogger));
 app.use(cors());
 app.use(express.json());
 
+app.use("/api/users", usersRouter);
 app.use("/api/contacts", routes.contactsRouter);
 
 app.use((req, res) => {
