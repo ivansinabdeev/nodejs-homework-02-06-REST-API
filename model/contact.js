@@ -20,9 +20,6 @@ const contactSchema = Schema(
       type: SchemaTypes.ObjectId,
       ref: "user",
     },
-    avatarURL: {
-      type: String,
-    },
   },
   { versionKey: false, timestamps: true }
 );

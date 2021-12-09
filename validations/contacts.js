@@ -14,7 +14,7 @@ const joiContactSchema = Joi.object({
 
   owner: Joi.string(),
 
-  avatarURL: Joi.string(),
+  // avatarURL: Joi.string(),
 });
 
 module.exports = joiContactSchema;
