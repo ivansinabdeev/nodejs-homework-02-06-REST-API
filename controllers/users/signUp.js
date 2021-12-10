@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs");
 const gravatar = require("gravatar");
 
 const { User } = require("../../model");
+const { sendLetter } = require("../../validations/mailTransporter");
 
 const signUp = async (req, res, next) => {
   try {
@@ -20,6 +21,13 @@ const signUp = async (req, res, next) => {
       token,
       avatarURL,
     });
+    const confirmationLetter = {
+      to: email,
+      subject: "Подтверждение регистрации",
+      text: `<a href="http://localhost:3000/api/users/verify/${verificationToken}">Нажмите для подтверждения email</a>`,
+    };
+
+    await sendLetter(confirmationLetter);
     res.status(201).json({
       status: "success",
       code: 201,
