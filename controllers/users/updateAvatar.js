@@ -15,8 +15,7 @@ const updateById = async (req, res, next) => {
     const avatar = path.join("/avatars", originalName);
     const userAvatar = await User.findOneAndUpdate(
       { _id: contactId, owner },
-        req.body,
-      {avatar}
+      { avatar },
       {
         new: true,
       }
