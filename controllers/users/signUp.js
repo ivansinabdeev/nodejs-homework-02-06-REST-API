@@ -6,8 +6,8 @@ const { User } = require("../../model");
 
 const signUp = async (req, res, next) => {
   try {
-    const avatarURL = gravatar.url("alex@gmail.com");
     const { email, password, subscription, token } = req.body;
+    const avatarURL = gravatar.url(email);
     const user = await User.findOne({ email });
     if (user) {
       throw new Conflict("Email in use");
