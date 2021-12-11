@@ -7,6 +7,9 @@ const { SECRET_KEY } = process.env;
 
 const authentication = async (req, res, next) => {
   try {
+    if (!req.headers.authorization) {
+      throw new BadRequest("");
+    }
     const [bearer, token] = req.headers.authorization.split(" ");
     const { id } = jwt.verify(token, SECRET_KEY);
     let user;
