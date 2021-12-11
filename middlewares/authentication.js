@@ -14,6 +14,10 @@ const authentication = async (req, res, next) => {
     const { id } = jwt.verify(token, SECRET_KEY);
     let user;
 
+    if (!req.headers.authorization) {
+      throw new BadRequest("");
+    }
+
     if (bearer === "Bearer" && token) {
       user = await User.findById(id);
     }

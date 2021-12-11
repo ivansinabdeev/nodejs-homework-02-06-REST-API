@@ -1,11 +1,13 @@
 const { Conflict } = require("http-errors");
 const bcrypt = require("bcryptjs");
+const gravatar = require("gravatar");
 
 const { User } = require("../../model");
 
 const signUp = async (req, res, next) => {
   try {
     const { email, password, subscription, token } = req.body;
+    const avatarURL = gravatar.url(email);
     const user = await User.findOne({ email });
     if (user) {
       throw new Conflict("Email in use");
@@ -16,6 +18,7 @@ const signUp = async (req, res, next) => {
       password: hashPassword,
       subscription,
       token,
+      avatarURL,
     });
     res.status(201).json({
       status: "success",
