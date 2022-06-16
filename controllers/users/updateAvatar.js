@@ -15,8 +15,10 @@ const updateById = async (req, res, next) => {
     const avatar = path.join("/avatars", originalName);
     const userAvatar = await User.findOneAndUpdate(
       { _id: contactId, owner },
-      {avatar}
-      {new: true}
+      { avatar },
+      {
+        new: true,
+      }
     );
     if (!userAvatar) {
       throw new createError(404, "This user does not exist in users");
